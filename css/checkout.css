@@ -1,0 +1,118 @@
+/* =============================================================
+   checkout.css — نافذة إتمام الشراء (الدفع عند الاستلام)
+   ============================================================= */
+.co-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(11, 18, 32, 0.6);
+  overflow-y: auto;
+}
+.co-modal[hidden] { display: none; }
+
+.co-box {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: #fff;
+  color: #172033;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.co-close {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 12px;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #172033;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.co-box h2 { margin: 0 0 4px; font-size: 20px; }
+.co-sub { margin: 0 0 16px; color: #64748b; font-size: 14px; }
+
+.co-summary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.co-lines { list-style: none; margin: 0 0 8px; padding: 0; }
+.co-lines li,
+.co-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+.co-total {
+  border-top: 1px dashed #cbd5e1;
+  margin-top: 6px;
+  padding-top: 8px;
+  font-size: 16px;
+}
+
+.co-box label {
+  display: block;
+  margin: 14px 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.co-box input,
+.co-box select,
+.co-box textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font: inherit;
+  background: #fff;
+  color: #172033;
+}
+.co-box input:focus,
+.co-box select:focus,
+.co-box textarea:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+.co-box textarea { resize: vertical; min-height: 70px; }
+
+.co-pay {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ecfdf5;
+  color: #166534;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.co-msg {
+  min-height: 20px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #b91c1c;
+}
+
+.co-submit { margin-top: 8px; }
+.co-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.co-success { text-align: center; padding: 12px 0 4px; }
+.co-success .co-check { font-size: 52px; }
+.co-success h2 { margin: 8px 0; }
+.co-success p { color: #475569; line-height: 1.8; }

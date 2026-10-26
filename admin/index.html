@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="a.title">لوحة التحكم | ElectroStore</title>
+  <script src="../js/i18n.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #172033;
+    }
+    header {
+      background: #101827;
+      color: white;
+      padding: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    header h1 { margin: 0; font-size: 22px; }
+    header a { color: #93c5fd; text-decoration: none; }
+    .header-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    #logoutBtn { background: #1e293b; color: white; }
+    main { max-width: 1000px; margin: 25px auto; padding: 0 15px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+    }
+    .stat, .panel {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 3px 15px #0f172a0a;
+    }
+    .stat span { color: #64748b; font-size: 14px; }
+    .stat strong { display: block; font-size: 25px; margin-top: 10px; }
+    .panel { margin-top: 20px; }
+    h2 { font-size: 19px; margin-top: 0; }
+    label { display: block; margin: 14px 0 7px; font-size: 14px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 9px;
+      font: inherit;
+      background: white;
+      color: inherit;
+    }
+    textarea { resize: vertical; min-height: 75px; }
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    button {
+      border: 0;
+      padding: 11px 16px;
+      border-radius: 9px;
+      cursor: pointer;
+      font: inherit;
+      font-weight: bold;
+    }
+    .primary { background: #2563eb; color: white; margin-top: 18px; }
+    .danger { background: #fee2e2; color: #b91c1c; }
+    .muted { color: #64748b; font-size: 13px; }
+    .product {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .product img {
+      width: 65px; height: 65px; object-fit: cover;
+      border-radius: 10px; background: #f1f5f9;
+    }
+    .product-info { flex: 1; min-width: 0; }
+    .product-info strong { display: block; margin-bottom: 6px; }
+    .product-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+    .empty { color: #64748b; padding: 15px 0; }
+    .order { padding: 16px 0; border-bottom: 1px solid #e2e8f0; line-height: 1.8; font-size: 14px; }
+    .order-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .order-head strong { font-size: 16px; }
+    .order-badge { padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: bold; background: #e2e8f0; }
+    .order-badge.new { background: #dbeafe; color: #1d4ed8; }
+    .order-badge.processing { background: #fef3c7; color: #b45309; }
+    .order-badge.shipped { background: #e0e7ff; color: #4338ca; }
+    .order-badge.delivered { background: #dcfce7; color: #15803d; }
+    .order-badge.cancelled { background: #fee2e2; color: #b91c1c; }
+    .order ul { margin: 6px 0; padding-inline-start: 20px; }
+    .order a { color: #2563eb; text-decoration: none; }
+    .order-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .order-actions select { width: auto; min-width: 160px; }
+    #message { margin-top: 12px; font-size: 14px; }
+    @media(max-width: 480px) {
+      .product { align-items: flex-start; flex-wrap: wrap; }
+      .product-info { min-width: 150px; }
+    }
+  </style>
+  <link rel="stylesheet" href="../css/theme.css">
+</head>
+<body class="admin-page">
+  <header>
+    <h1 data-i18n="a.header">⚡ ElectroStore — لوحة التحكم</h1>
+    <div class="header-actions">
+      <button type="button" id="langBtn" class="tg-btn">EN</button>
+      <button type="button" id="themeBtn" class="tg-btn">🌙</button>
+      <button type="button" id="logoutBtn" hidden data-i18n="a.logout">تسجيل الخروج</button>
+      <a href="../index.html" data-i18n="a.back">الرجوع للمتجر ↩</a>
+    </div>
+  </header>
+
+  <section id="loginPanel" class="panel"
+  style="display:none;max-width:420px;margin:50px auto;padding:25px">
+  <h2 data-i18n="a.login.title">🔐 تسجيل دخول الأدمن</h2>
+
+  <form id="loginForm">
+    <label for="adminEmail" data-i18n="a.email">البريد الإلكتروني</label>
+    <input id="adminEmail" type="email" required
+      autocomplete="username" data-i18n-ph="a.emailPh" placeholder="أدخل إيميل الأدمن">
+
+    <label for="adminPassword" data-i18n="a.password">كلمة المرور</label>
+    <input id="adminPassword" type="password" required
+      autocomplete="current-password" data-i18n-ph="a.passwordPh" placeholder="أدخل كلمة المرور">
+
+    <button class="primary" type="submit" data-i18n="a.login">تسجيل الدخول</button>
+    <div id="loginMessage" role="status"></div>
+  </form>
+</section>
+
+<div id="adminApp" style="display:none">
+<main>
+    <section class="stats">
+      <div class="stat">
+        <span data-i18n="a.stat.products">إجمالي المنتجات</span>
+        <strong id="productCount">0</strong>
+      </div>
+      <div class="stat">
+        <span data-i18n="a.stat.orders">طلبات الشراء المسجلة</span>
+        <strong id="orderCount">0</strong>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 id="formTitle" data-i18n="a.form.add">➕ إضافة منتج جديد</h2>
+      <form id="productForm">
+        <div class="fields">
+          <div>
+            <label for="name" data-i18n="a.f.name">اسم المنتج *</label>
+            <input id="name" required maxlength="100" data-i18n-ph="a.f.namePh" placeholder="مثال: سماعة لاسلكية">
+          </div>
+          <div>
+            <label for="price" data-i18n="a.f.price">السعر بالجنيه *</label>
+            <input id="price" type="number" min="0.01" step="0.01" required>
+          </div>
+          <div>
+            <label for="discount" data-i18n="a.f.discount">نسبة الخصم (%)</label>
+            <input id="discount" type="number"
+              min="0" max="99" step="1" value="0" required>
+          </div>
+          <div>
+            <label for="category" data-i18n="a.f.category">القسم *</label>
+            <select id="category" required>
+              <option value="phones" data-i18n="cat.phones.label">الهواتف</option>
+              <option value="headphones" data-i18n="cat.headphones.label">السماعات</option>
+              <option value="accessories" data-i18n="cat.accessories.label">الإكسسوارات</option>
+              <option value="watches" data-i18n="cat.watches.label">الساعات الذكية</option>
+            </select>
+          </div>
+          <div>
+            <label for="stock" data-i18n="a.f.stock">الكمية المتاحة</label>
+            <input id="stock" type="number" min="0" step="1" value="1">
+          </div>
+        </div>
+
+        <label for="description" data-i18n="a.f.desc">وصف المنتج</label>
+        <textarea id="description" maxlength="500" data-i18n-ph="a.f.descPh" placeholder="اكتب وصفًا مختصرًا"></textarea>
+
+        <label for="image" data-i18n="a.f.image">صورة المنتج</label>
+        <input id="image" type="file" accept="image/png,image/jpeg,image/webp">
+        <p class="muted" data-i18n="a.f.imageHint">اختار صورة واضحة بصيغة JPG أو PNG أو WebP، بحد أقصى 1 ميجابايت.</p>
+
+        <!-- ===== جديد: خيارات المنتج ===== -->
+        <fieldset class="opt-panel" id="optPanel">
+          <legend data-i18n="a.o.title">⚙️ خيارات المنتج (اختياري)</legend>
+          <p class="muted" data-i18n="a.o.help"></p>
+          <div id="optBody"></div>
+        </fieldset>
+
+        <!-- ===== جديد: صور إضافية ===== -->
+        <fieldset class="opt-panel" id="galleryPanel">
+          <legend data-i18n="a.g.title">🖼️ صور إضافية للمنتج</legend>
+          <p class="muted" data-i18n="a.g.help"></p>
+          <input id="galleryInput" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+          <div id="galleryMessage" role="status" class="muted"></div>
+          <div id="galleryList"></div>
+        </fieldset>
+
+        <button class="primary" type="submit" data-i18n="a.f.save">حفظ المنتج</button>
+        <button type="button" id="cancelEdit" hidden data-i18n="a.f.cancel">إلغاء التعديل</button>
+        <div id="message" role="status"></div>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="a.products">📦 منتجات المتجر</h2>
+      <div id="productList"></div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="a.s.title">🚚 أسعار الشحن حسب المحافظة</h2>
+      <p class="muted" data-i18n="a.s.help"></p>
+      <div id="shippingGrid" class="ship-grid"></div>
+      <button type="button" class="primary" id="saveShipping" data-i18n="a.s.save">حفظ أسعار الشحن</button>
+      <div id="shippingMessage" role="status" class="muted" style="margin-top:10px"></div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="a.orders">🧾 طلبات الشراء (الدفع عند الاستلام)</h2>
+      <button type="button" id="refreshOrders" data-i18n="a.ordersRefresh">🔄 تحديث الطلبات</button>
+      <div id="orderMessage" role="status" class="muted" style="margin-top:10px"></div>
+      <div id="orderList"></div>
+    </section>
+  </main>
+
+  <script src="../js/products.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-client.js"></script>
+
+  <script src="admin.js"></script>
+</div>
+</body>
+</html>

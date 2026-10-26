@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ElectroStore - متجر إلكترونيات وإكسسوارات: هواتف، سماعات، ساعات ذكية وإكسسوارات.">
+  <meta name="theme-color" content="#0b1220">
+  <title data-i18n="doc.title">ElectroStore | متجر الإلكترونيات والإكسسوارات</title>
+
+  <!-- يضبط اللغة والاتجاه والمظهر قبل أول رسم (بدون وميض) -->
+  <script src="js/i18n.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/checkout.css">
+  <link rel="stylesheet" href="css/theme.css">
+</head>
+<body id="top">
+
+  <a class="skip-link" href="#products" data-i18n="skip">تخطَّ إلى المنتجات</a>
+
+  <div class="announce" data-i18n="announce">🚧 هذا المتجر في مرحلة التطوير — الدفع عند الاستلام</div>
+
+  <!-- ===================== الهيدر ===================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+
+      <button class="icon-btn menu-toggle" id="menuToggle"
+              data-i18n-aria="menu.open" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mainNav">☰</button>
+
+      <a class="logo" href="#top" data-i18n-aria="logo.aria" aria-label="ElectroStore - الصفحة الرئيسية">
+        <span class="logo-mark" aria-hidden="true">⚡</span>
+        <span class="logo-text" dir="ltr">Electro<b>Store</b></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav" data-i18n-aria="nav.aria" aria-label="أقسام المتجر">
+        <a href="#top" data-nav="home" data-i18n="nav.home">الرئيسية</a>
+        <a href="#products" data-category="all" data-i18n="nav.all">كل المنتجات</a>
+        <a href="#products" data-category="phones" data-i18n="cat.phones.label">الهواتف</a>
+        <a href="#products" data-category="headphones" data-i18n="cat.headphones.label">السماعات</a>
+        <a href="#products" data-category="accessories" data-i18n="cat.accessories.label">الإكسسوارات</a>
+        <a href="#products" data-category="watches" data-i18n="cat.watches.label">الساعات الذكية</a>
+      </nav>
+
+      <form class="search" id="searchForm" role="search">
+        <label class="sr-only" for="searchInput" data-i18n="search.label">ابحث عن منتج</label>
+        <input id="searchInput" type="search" data-i18n-ph="search.ph" placeholder="ابحث عن هاتف، سماعة، شاحن..." autocomplete="off">
+        <button type="submit" data-i18n-aria="search.btn" aria-label="بحث">🔍</button>
+      </form>
+
+      <div class="header-actions">
+        <button class="icon-btn lang-btn" id="langBtn" type="button" aria-label="تغيير اللغة">🌐</button>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="تغيير المظهر">🌙</button>
+        <button class="icon-btn cart-btn" id="cartBtn" data-i18n-aria="cart.aria" aria-label="سلة المشتريات" aria-controls="cartDrawer">
+          <span aria-hidden="true">🛒</span>
+          <span class="cart-count" id="cartCount" hidden>0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ===================== القسم الرئيسي (Hero) ===================== -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <span class="eyebrow" data-i18n="hero.eyebrow">عالم التقنية بين يديك</span>
+          <h1><span data-i18n="hero.h1a">تقنية متطورة</span> <span class="grad" data-i18n="hero.h1b">بتصميم فاخر</span></h1>
+          <p data-i18n="hero.p">اكتشف تشكيلة من الهواتف والسماعات والساعات الذكية والإكسسوارات، مع تجربة تسوّق سريعة وسهلة على جميع الأجهزة.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#products" data-category="all" data-i18n="hero.shop">تسوّق الآن</a>
+            <a class="btn btn-ghost" href="#categories" data-i18n="hero.browse">تصفّح الأقسام</a>
+          </div>
+          <ul class="hero-points">
+            <li data-i18n="hero.p1">✔ تصميم متجاوب</li>
+            <li data-i18n="hero.p2">✔ بحث فوري</li>
+            <li data-i18n="hero.p3">✔ سلة تفاعلية</li>
+          </ul>
+        </div>
+
+        <div class="hero-visual" id="heroVisual" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- ===================== الأقسام ===================== -->
+    <section class="section container" id="categories">
+      <div class="section-head reveal">
+        <h2 data-i18n="cats.title">تسوّق حسب القسم</h2>
+        <p data-i18n="cats.sub">اختر القسم الذي يناسبك وابدأ التصفّح</p>
+      </div>
+      <div class="category-grid" id="categoryGrid"></div>
+    </section>
+
+    <!-- ===================== المنتجات ===================== -->
+    <section class="section container" id="products">
+      <div class="section-head reveal">
+        <h2 data-i18n="prod.title">منتجاتنا</h2>
+        <p id="resultsInfo" aria-live="polite"></p>
+      </div>
+
+      <div class="toolbar reveal">
+        <div class="chips" id="chips" role="tablist" data-i18n-aria="prod.filter" aria-label="تصفية المنتجات حسب القسم"></div>
+        <div class="sort">
+          <label for="sortSelect" data-i18n="sort.label">الترتيب:</label>
+          <select id="sortSelect">
+            <option value="default" data-i18n="sort.default">الافتراضي</option>
+            <option value="price-asc" data-i18n="sort.asc">السعر: الأقل أولًا</option>
+            <option value="price-desc" data-i18n="sort.desc">السعر: الأعلى أولًا</option>
+            <option value="rating" data-i18n="sort.rating">الأعلى تقييمًا</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <div class="empty-icon" aria-hidden="true">🔎</div>
+        <h3 data-i18n="empty.title">لا توجد نتائج</h3>
+        <p id="emptyText"></p>
+        <button class="btn btn-primary" id="resetFilters" data-i18n="empty.reset">عرض كل المنتجات</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== الفوتر ===================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="logo logo-light" href="#top">
+          <span class="logo-mark" aria-hidden="true">⚡</span>
+          <span class="logo-text" dir="ltr">Electro<b>Store</b></span>
+        </a>
+        <p data-i18n="footer.about">متجر إلكترونيات وإكسسوارات — مشروع قيد التطوير.</p>
+      </div>
+      <div class="footer-links">
+        <h4 data-i18n="footer.cats">الأقسام</h4>
+        <a href="#products" data-category="phones" data-i18n="cat.phones.label">الهواتف</a>
+        <a href="#products" data-category="headphones" data-i18n="cat.headphones.label">السماعات</a>
+        <a href="#products" data-category="accessories" data-i18n="cat.accessories.label">الإكسسوارات</a>
+        <a href="#products" data-category="watches" data-i18n="cat.watches.label">الساعات الذكية</a>
+      </div>
+      <div class="footer-note">
+        <h4 data-i18n="footer.noteTitle">ملاحظة</h4>
+        <p data-i18n="footer.note">الدفع حاليًا عند الاستلام فقط، والدفع الإلكتروني سيُضاف لاحقًا.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> <span data-i18n="footer.rights">ElectroStore — جميع الحقوق محفوظة</span></span>
+    </div>
+  </footer>
+
+  <!-- ===================== سلة المشتريات ===================== -->
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" aria-hidden="true">
+    <div class="drawer-head">
+      <h2 id="cartTitle" data-i18n="cartd.title">سلة المشتريات</h2>
+      <button class="icon-btn" id="closeCart" data-i18n-aria="cartd.close" aria-label="إغلاق السلة">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <ul class="cart-list" id="cartItems"></ul>
+      <div class="cart-empty" id="cartEmpty">
+        <div class="empty-icon" aria-hidden="true">🛒</div>
+        <p data-i18n="cartd.empty">سلتك فارغة حاليًا</p>
+        <button class="btn btn-primary" id="startShopping" data-i18n="cartd.start">ابدأ التسوّق</button>
+      </div>
+    </div>
+
+    <div class="drawer-foot" id="cartFoot" hidden>
+      <div class="total-row">
+        <span data-i18n="cartd.total">الإجمالي</span>
+        <strong id="cartTotal">0</strong>
+      </div>
+      <button class="btn btn-primary btn-block" id="checkoutBtn" data-i18n="cartd.checkout">إتمام الشراء</button>
+      <button class="btn-link" id="clearCart" data-i18n="cartd.clear">تفريغ السلة</button>
+      <p class="note" data-i18n="cartd.note">الدفع عند الاستلام. الشحن يُحسب عند إتمام الطلب.</p>
+    </div>
+  </aside>
+
+  <!-- ===================== إتمام الشراء ===================== -->
+  <div class="co-modal" id="checkoutModal" hidden>
+    <div class="co-box" role="dialog" aria-modal="true" aria-labelledby="coTitle">
+      <button type="button" class="co-close" id="closeCheckout" data-i18n-aria="co.close" aria-label="إغلاق">✕</button>
+
+      <div id="checkoutFormView">
+        <h2 id="coTitle" data-i18n="co.title">إتمام الطلب</h2>
+        <p class="co-sub" data-i18n="co.sub">أدخل بيانات التوصيل وسندفع عند الاستلام.</p>
+
+        <div class="co-summary" id="coSummary"></div>
+
+        <form id="checkoutForm" novalidate>
+          <label for="coName" data-i18n="co.name">الاسم بالكامل *</label>
+          <input id="coName" type="text" maxlength="100" autocomplete="name" required>
+
+          <label for="coPhone" data-i18n="co.phone">رقم الموبايل *</label>
+          <input id="coPhone" type="tel" inputmode="numeric" maxlength="14"
+                 autocomplete="tel" placeholder="01012345678" dir="ltr" required>
+
+          <label for="coGov" data-i18n="co.gov">المحافظة *</label>
+          <select id="coGov" required>
+            <option value="" data-i18n="co.govPick">اختر المحافظة</option>
+          </select>
+
+          <label for="coAddress" data-i18n="co.address">العنوان بالتفصيل *</label>
+          <textarea id="coAddress" maxlength="300" autocomplete="street-address"
+                    data-i18n-ph="co.addressPh" placeholder="المدينة / الحي / الشارع / رقم العمارة / الدور" required></textarea>
+
+          <label for="coNotes" data-i18n="co.notes">ملاحظات (اختياري)</label>
+          <textarea id="coNotes" maxlength="300"></textarea>
+
+          <div class="co-pay" data-i18n="co.pay">💵 طريقة الدفع: الدفع عند الاستلام</div>
+
+          <div class="co-msg" id="coMsg" role="alert"></div>
+
+          <button type="submit" class="btn btn-primary btn-block co-submit" id="coSubmit" data-i18n="co.confirm">
+            تأكيد الطلب
+          </button>
+        </form>
+      </div>
+
+      <div class="co-success" id="checkoutSuccess" hidden>
+        <div class="co-check" aria-hidden="true">✅</div>
+        <h2 data-i18n="co.okTitle">تم استلام طلبك</h2>
+        <p id="successText"></p>
+        <button type="button" class="btn btn-primary btn-block" id="successClose" data-i18n="co.continue">متابعة التسوق</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-zone" id="toastZone" aria-live="polite"></div>
+
+  <!-- الترتيب مهم: الأقسام ثم Supabase ثم منطق المتجر -->
+  <script src="js/products.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
